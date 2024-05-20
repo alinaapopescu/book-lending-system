@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Asigură-te că această cale este corectă
+const sequelize = require('../config/database'); 
+const bcrypt = require('bcrypt')
 
 const User = sequelize.define('User', {
   username: {
@@ -20,6 +21,17 @@ const User = sequelize.define('User', {
     type: DataTypes.ENUM('admin', 'user'),
     defaultValue: 'user'
   }
+}, {
+  hooks: {
+    beforeCreate: async (user) => {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(user.password, salt);
+    }
+  }
 });
+
+User.prototype.validPassword = function(password) {
+  return bcrypt.compare(password, this.password);
+};
 
 module.exports = User;
