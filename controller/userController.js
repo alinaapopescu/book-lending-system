@@ -2,6 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+
+// CREATE
 exports.createUser = async (req, res) => {
   try {
     const { username, email, password, role = 'user' } = req.body;
@@ -13,6 +15,8 @@ exports.createUser = async (req, res) => {
   }
 }
 
+
+// REGISTER
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -24,6 +28,7 @@ exports.register = async (req, res) => {
   }
 };
 
+// LOGIN
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -44,5 +49,41 @@ exports.login = async (req, res) => {
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).send({ message: 'Login failed', error });
+  }
+};
+
+// UPDATE USER IN CASE OF ADMIN
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, email, role } = req.body;
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    user.username = username || user.username;
+    user.email = email || user.email;
+    user.role = role || user.role;
+    await user.save();
+    res.send({ message: 'User updated successfully', user });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).send({ message: 'Error updating user', error });
+  }
+};
+
+// DELETE USER
+exports.deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    await user.destroy();
+    res.send({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).send({ message: 'Error deleting user', error });
   }
 };

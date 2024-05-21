@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Category = require('./Category');
 
 const Book = sequelize.define('Book', {
   title: {
@@ -16,8 +17,16 @@ const Book = sequelize.define('Book', {
     type: DataTypes.STRING
   },
   category_id: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: Category,
+      key: 'id'
+    }
   }
 });
+
+// Book <-> Category
+Book.belongsTo(Category, { foreignKey: 'category_id' });
 
 module.exports = Book;
