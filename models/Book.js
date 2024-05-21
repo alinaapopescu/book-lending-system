@@ -3,6 +3,11 @@ const sequelize = require('../config/database');
 const Category = require('./Category');
 
 const Book = sequelize.define('Book', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true 
+  },
   title: {
     type: DataTypes.STRING
   },
@@ -23,8 +28,12 @@ const Book = sequelize.define('Book', {
       model: Category,
       key: 'id'
     }
+  }},
+  {
+    tableName: 'book',
+    timestamps: false
   }
-});
+);
 
 // Book <-> Category
 Book.belongsTo(Category, { foreignKey: 'category_id' });

@@ -20,8 +20,12 @@ const { authenticate, isAdmin } = require('../middleware/auth');
  *           schema:
  *             type: object
  *             properties:
- *               prizeName:
+ *               name:
  *                 type: string
+ *               year:
+ *                  type: integer
+ *               description:
+ *                  type: string
  *     responses:
  *       200:
  *         description: Prize added successfully

@@ -2,8 +2,8 @@ const Book = require('../models/Book');
 
 exports.addBook = async (req, res) => {
   try {
-    const { title, author, category, availableCopies } = req.body;
-    const book = await Book.create({ title, author, category, availableCopies });
+    const { title, author, isbn, cover_image, catgeory_id } = req.body;
+    const book = await Book.create({ title, author, isbn, cover_image, catgeory_id });
     res.status(201).send({ message: 'Book added successfully', book });
   } catch (error) {
     console.error('Error adding book:', error);
@@ -29,15 +29,16 @@ exports.deleteBook = async (req, res) => {
 exports.updateBook = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, author, category, availableCopies } = req.body;
+    const { title, author, isbn, cover_image, catgeory_id } = req.body;
     const book = await Book.findByPk(id);
     if (!book) {
       return res.status(404).send({ message: 'Book not found' });
     }
     book.title = title || book.title;
     book.author = author || book.author;
-    book.category = category || book.category;
-    book.availableCopies = availableCopies || book.availableCopies;
+    book.isbn = isbn || book.isbn;
+    book.cover_image = cover_image || book.cover_image;
+    book.catgeory_id = catgeory_id || book.catgeory_id;
     await book.save();
     res.send({ message: 'Book updated successfully', book });
   } catch (error) {

@@ -19,6 +19,9 @@ const Loan = sequelize.define('Loan', {
     values: ['active', 'completed', 'overdue'],
     defaultValue: 'active'
   }
+},
+{
+  tableName: 'loan'
 });
 
 module.exports = Loan;
