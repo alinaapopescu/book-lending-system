@@ -115,12 +115,12 @@ router.put('/update/:id', authenticate, isAdmin, bookController.updateBook);
 /**
  * @openapi
  * /books/sorted:
- *   put:
+ *   get:
  *     security:
  *       - bearerAuth: []
  *     tags:
  *       - Books
- *     summary: List all the books in the alphabetic order od the authors
+ *     summary: List all the books in the alphabetic order by the author
  *     description: For everyone, there is not necessary to be logged.
  *     parameters:
  *       - in: path
@@ -139,6 +139,10 @@ router.get('/sorted', bookController.getSortedBooks);
  * @openapi
  * /books/search/author/{author}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Books
  *     summary: Search for books by author
  *     parameters:
  *       - in: path
@@ -170,6 +174,10 @@ router.get('/search/author/:author', bookController.searchBooksByAuthor);
  * @openapi
  * /books/search/title/{title}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Books
  *     summary: Search for books by title
  *     parameters:
  *       - in: path
@@ -177,10 +185,10 @@ router.get('/search/author/:author', bookController.searchBooksByAuthor);
  *         required: true
  *         schema:
  *           type: string
- *         description: The name of the title to search for
+ *         description: The title of the book to search for
  *     responses:
  *       200:
- *         description: A list of books by the given title
+ *         description: A list of books with the given title
  *         content:
  *           application/json:
  *             schema:
