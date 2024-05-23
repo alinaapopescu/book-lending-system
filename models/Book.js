@@ -37,5 +37,6 @@ const Book = sequelize.define('Book', {
 
 // Book <-> Category
 Book.belongsTo(Category, { foreignKey: 'category_id' });
+Category.hasMany(Book, { foreignKey: 'category_id' });
 
 module.exports = Book;
