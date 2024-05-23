@@ -60,6 +60,31 @@ router.post('/add', authenticate, loanController.loanBook);
  */
 router.get('/get/:userId', authenticate, isAdmin, loanController.getAllUserLoans);
 
+
+/**
+ * @openapi
+ * /loan/:loanId
+ *   post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Loan
+ *     summary: Get details about a loan
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               loan_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: User loan details were returned successfully
+ *       403:
+ *         description: Authorization required
+ */
 router.get('/:loanId', authenticate, isAdmin, loanController.getLoanDetails);
 
 module.exports = router;

@@ -8,10 +8,8 @@ exports.loanBook = async (req, res) => {
     const { book_id, loan_date } = req.body;
     let loanDate = new Date(loan_date);
     let returnDate = new Date(loan_date);
-    returnDate.setDate(loanDate.getDate() + 14);  // Setează data de returnare la 14 zile după data de împrumut
-
+    returnDate.setDate(loanDate.getDate() + 14); 
     try {
-        // Verificam daca nu apar conflicte cu alt imprumut
         const loanExist = await Loan.findOne({
             where: {
                 book_id,
@@ -25,8 +23,6 @@ exports.loanBook = async (req, res) => {
         if (loanExist) {
             return res.status(409).send({ message: 'Sorry, this book is already loaned out during the requested period.' });
         }
-
-        // Crearea împrumutului
         const loan = await Loan.create({
             book_id,
             loan_date: loanDate,
@@ -79,9 +75,6 @@ exports.getLoanDetails = async (req, res) => {
                 }
             ]
         });
-        // console.log('User model is:', User);
-        // console.log('Book model is:', Book);
-
         if (!loan) {
             return res.status(404).send({ message: 'Loan not found' });
         }

@@ -7,10 +7,8 @@ const BookPrize = require('../models/BookPrize');
 exports.addBook = async (req, res) => {
   try {
     const { title, author, isbn, cover_image, category_id } = req.body;
-     // Verificam daca categoria exista
      const categoryExists = await Category.findByPk(category_id);
      if (!categoryExists) {
-      //  console.error('Category not found: ', error);
        return res.status(404).send({ message: 'Category not found' });
      }
     const book = await Book.create({ title, author, isbn, cover_image, category_id });
@@ -28,13 +26,10 @@ exports.deleteBook = async (req, res) => {
     if (!book) {
       return res.status(404).send({ message: 'Book not found' });
     }
-    // Check if the book is currently loaned out
     const loan = await Loan.findOne({ where: { book_id: id } });
     if (loan) {
       return res.status(400).send({ message: 'Book cannot be deleted because it is currently loaned out.' });
     }
-
-    // Check for associated book prizes and delete them
     const bookPrizes = await BookPrize.findAll({ where: { book_id: id } });
     for (const bookPrize of bookPrizes) {
       await bookPrize.destroy();

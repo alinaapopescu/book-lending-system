@@ -80,7 +80,6 @@ exports.deleteUser = async (req, res) => {
     if (!user) {
       return res.status(404).send({ message: 'User not found' });
     }
-      // Check for active loans
       const activeLoans = await Loan.findAll({
         where: {
           user_id: id,  

@@ -22,8 +22,8 @@ const Prize = sequelize.define('Prize', {
   }
 },
 {
-  tableName: 'prize', // Specifică explicit numele tabelului pentru a evita orice confuzie
-  timestamps: false   // Presupunem că tabelul nu folosește timestamps dacă nu este specificat altfel
+  tableName: 'prize', 
+  timestamps: false   
 });
 
 module.exports = Prize;
