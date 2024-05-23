@@ -1,7 +1,7 @@
 const Book = require('../models/Book'); 
 const Category = require('../models/Category')
 const BookPrize = require('../models/BookPrize');
-
+const { Op } = require('sequelize');
 
 
 exports.addBook = async (req, res) => {
@@ -62,3 +62,52 @@ exports.updateBook = async (req, res) => {
     res.status(500).send({ message: 'Error updating book', error });
   }
 };
+
+
+// Sort the book alphabetical using title
+exports.getSortedBooks = async (req, res) => {
+  try {
+    const books = await Book.findAll({
+      order: [['title', 'ASC']]
+    });
+    res.status(200).send(books);
+  } catch (error) {
+    console.error('Error fetching sorted books:', error);
+    res.status(500).send({ message: 'Error fetching sorted books', error });
+  }
+};
+
+exports.searchBooksByTitle = async (req, res) => {
+  try {
+    const { title } = req.params;
+    const books = await Book.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${title}%`
+        }
+      }
+    });
+    res.status(200).send(books);
+  } catch (error) {
+    console.error('Error searching books by title:', error);
+    res.status(500).send({ message: 'Error searching books by title', error });
+  }
+};
+
+exports.searchBooksByAuthor = async (req, res) => {
+  try {
+    const { author } = req.params;
+    const books = await Book.findAll({
+      where: {
+        author: {
+          [Op.like]: `%${author}%`
+        }
+      }
+    });
+    res.status(200).send(books);
+  } catch (error) {
+    console.error('Error searching books by author:', error);
+    res.status(500).send({ message: 'Error searching books by author', error });
+  }
+};
+

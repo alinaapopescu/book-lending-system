@@ -109,4 +109,93 @@ router.delete('/delete/:id', authenticate, isAdmin, bookController.deleteBook);
  */
 router.put('/update/:id', authenticate, isAdmin, bookController.updateBook);
 
+
+
+
+/**
+ * @openapi
+ * /books/sorted:
+ *   put:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Books
+ *     summary: List all the books in the alphabetic order od the authors
+ *     description: For everyone, there is not necessary to be logged.
+ *     parameters:
+ *       - in: path
+ *     requestBody:
+ *       required: false
+ *     responses:
+ *       200:
+ *         description: Books
+ *       404:
+ *         description: No book found
+ */
+router.get('/sorted', bookController.getSortedBooks);
+
+
+/**
+ * @openapi
+ * /books/search/author/{author}:
+ *   get:
+ *     summary: Search for books by author
+ *     parameters:
+ *       - in: path
+ *         name: author
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The name of the author to search for
+ *     responses:
+ *       200:
+ *         description: A list of books by the given author
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   title:
+ *                     type: string
+ *                   author:
+ *                     type: string
+ */
+router.get('/search/author/:author', bookController.searchBooksByAuthor);
+
+/**
+ * @openapi
+ * /books/search/title/{title}:
+ *   get:
+ *     summary: Search for books by title
+ *     parameters:
+ *       - in: path
+ *         name: title
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The name of the title to search for
+ *     responses:
+ *       200:
+ *         description: A list of books by the given title
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   title:
+ *                     type: string
+ *                   author:
+ *                     type: string
+ */
+router.get('/search/title/:title', bookController.searchBooksByTitle);
+
+
 module.exports = router;
