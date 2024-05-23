@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
 const Loan = require('../models/Loan');
 const { sequelize } = require('../config/database');
+const Book = require('../models/Book');
+const User = require('../models/User');
 
 exports.loanBook = async (req, res) => {
     const { book_id, loan_date } = req.body;
@@ -36,5 +38,63 @@ exports.loanBook = async (req, res) => {
     } catch (error) {
         console.error('Error at book loan:', error);
         res.status(500).send({ message: 'Internal Error', error });
+    }
+};
+
+
+// All the loans of a user
+exports.getAllUserLoans = async (req, res) => {
+    try {
+        const user_id = req.params.userId;
+        const user = await User.findByPk(user_id);
+        if (!user) {
+            return res.status(404).send({ message: 'User not found' });
+        }
+
+        const loans = await Loan.findAll({
+            where: { user_id: user_id}
+        });
+
+        res.send(loans);
+    } catch (error) {
+        console.error('Error retrieving user loans:', error);
+        res.status(500).send({ message: 'Failed to retrieve loans', error });
+    }
+};
+
+
+// Loan detaile
+exports.getLoanDetails = async (req, res) => {
+    try {
+        const { loanId } = req.params;
+        const loan = await Loan.findByPk(loanId, {
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'username']  
+                },
+                {
+                    model: Book,
+                    attributes: ['id', 'title', 'author'],
+                }
+            ]
+        });
+        // console.log('User model is:', User);
+        // console.log('Book model is:', Book);
+
+        if (!loan) {
+            return res.status(404).send({ message: 'Loan not found' });
+        }
+
+        res.send({
+            userId: loan.User.id,
+            userName: loan.User.username,
+            bookId: loan.Book.id,
+            bookTitle: loan.Book.title,
+            authorName: loan.Book.author 
+        });
+    } catch (error) {
+        console.error('Error retrieving loan details:', error);
+        res.status(500).send({ message: 'Failed to retrieve loan details', error });
     }
 };

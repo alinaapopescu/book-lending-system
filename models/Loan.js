@@ -37,13 +37,13 @@ const Loan = sequelize.define('Loan', {
   timestamps: false
 });
 
-User.belongsToMany(Book, { through: Loan, foreignKey: 'user_id' });
-Book.belongsToMany(User, { through: Loan, foreignKey: 'book_id' });
+// User.belongsToMany(Book, { through: Loan, foreignKey: 'user_id' });
+// Book.belongsToMany(User, { through: Loan, foreignKey: 'book_id' });
 
-// User.hasMany(Loan, { foreignKey: 'user_id' });
-// Loan.belongsTo(User, { foreignKey: 'user_id' });
+User.hasMany(Loan, { foreignKey: 'user_id' });
+Loan.belongsTo(User, { foreignKey: 'user_id' });
 
-// Book.hasMany(Loan, { foreignKey: 'book_id' });
-// Loan.belongsTo(Book, { foreignKey: 'book_id' });
+Book.hasMany(Loan, { foreignKey: 'book_id' });
+Loan.belongsTo(Book, { foreignKey: 'book_id' });
 
 module.exports = Loan;

@@ -1,7 +1,7 @@
 const Prize = require('../models/Prize'); 
 // const bcrypt = require('bcrypt');
 // const jwt = require('jsonwebtoken');
-
+const BookPrize = require('../models/BookPrize');
 
 exports.addPrize = async (req, res) => {
   try {
@@ -21,6 +21,10 @@ exports.deletePrize = async (req, res) => {
     const prize = await Prize.findByPk(id);
     if (!prize) {
       return res.status(404).send({ message: 'Prize not found' });
+    }
+    const bookPrizes = await BookPrize.findAll({ where: { prize_id: id } });
+    for (const bookPrize of bookPrizes) {
+      await bookPrize.destroy();
     }
     await prize.destroy();
     res.send({ message: 'Prize deleted successfully' });
