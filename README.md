@@ -8,7 +8,7 @@ The Book Lending System is designed to facilitate the management and lending of 
 ## Installation
 
 ```bash
-git clone https://yourrepositorylink.com
+git clone [https://yourrepositorylink.com](https://github.com/alinutz03/book-lending-system.git)
 cd book-lending-system
 npm install
 ```
