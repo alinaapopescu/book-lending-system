@@ -1,6 +1,6 @@
 const Prize = require('../models/Prize'); 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
 
 
 exports.addPrize = async (req, res) => {

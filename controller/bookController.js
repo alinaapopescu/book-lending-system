@@ -1,4 +1,5 @@
 const Book = require('../models/Book'); 
+const Category = require('../models/Category')
 
 exports.addBook = async (req, res) => {
   try {
@@ -6,10 +7,10 @@ exports.addBook = async (req, res) => {
      // Verificam daca categoria exista
      const categoryExists = await Category.findByPk(category_id);
      if (!categoryExists) {
-       console.error('Category not found: ', error);
+      //  console.error('Category not found: ', error);
        return res.status(404).send({ message: 'Category not found' });
      }
-    const book = await Book.create({ title, author, isbn, cover_image, catgeory_id });
+    const book = await Book.create({ title, author, isbn, cover_image, category_id });
     res.status(201).send({ message: 'Book added successfully', book });
   } catch (error) {
     console.error('Error adding book:', error);

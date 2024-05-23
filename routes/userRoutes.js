@@ -157,5 +157,27 @@ router.put('/update/:id', authenticate, isAdmin, userController.updateUser);
  */
 router.delete('/delete/:id', authenticate, isAdmin, userController.deleteUser);
 
+/**
+ * @openapi
+ * /users/logout:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Logout
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: User was disconected successfully
+ *       400:
+ *         description: Error in logout
+ */
+
+router.post('/logout', userController.logout);
+
 
 module.exports = router;

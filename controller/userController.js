@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
-// CREATE
+const invalidTokens = new Set();
+
 exports.createUser = async (req, res) => {
   try {
     const { username, email, password, role = 'user' } = req.body;
@@ -16,11 +17,10 @@ exports.createUser = async (req, res) => {
 }
 
 
-// REGISTER
 exports.register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    const user = await User.create({ username, email, password, role: 'user' });
+    const { username, email, password, role = 'user' } = req.body;
+    const user = await User.create({ username, email, password, role });
     res.status(201).send({ message: "User registered successfully", userId: user.id });
   } catch (error) {
     console.error('Registration error:', error);
@@ -28,20 +28,20 @@ exports.register = async (req, res) => {
   }
 };
 
-// LOGIN
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login attempt for:", email);  // Log email corect
+    console.log("Login attempt for:", email);  
 
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      console.log("No user found with that email"); // exista utilizatorul
+      console.log("No user found with that email"); 
       return res.status(401).send({ message: "Invalid credentials" });
     }
     const token = jwt.sign(
       { id: user.id, role: user.role }, 
-      process.env.JWT_SECRET, // Cheia secreta
+      process.env.JWT_SECRET, 
       { expiresIn: '24h' }
     );
 
@@ -52,7 +52,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// UPDATE USER IN CASE OF ADMIN
+
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -72,7 +72,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-// DELETE USER
+
 exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -87,3 +87,17 @@ exports.deleteUser = async (req, res) => {
     res.status(500).send({ message: 'Error deleting user', error });
   }
 };
+
+exports.logout = (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(400).send({ message: 'Token is required' });
+  }
+
+  invalidTokens.add(token);
+
+  res.send({ message: 'Logout successful' });
+};
+
+exports.invalidTokens = invalidTokens;
+

@@ -7,24 +7,23 @@ const BookPrize = sequelize.define('BookPrize', {
   book_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Book,
+      model: 'Book', 
       key: 'id'
     }
   },
   prize_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Prize,
+      model: 'Prize', 
       key: 'id'
     }
   }
-},
-{
+}, {
   tableName: 'bookprize', 
   timestamps: false  
-}
-);
+});
+
 Book.belongsToMany(Prize, { through: BookPrize, foreignKey: 'book_id' });
 Prize.belongsToMany(Book, { through: BookPrize, foreignKey: 'prize_id' });
 
-module.exports = Prize;
+module.exports = BookPrize;

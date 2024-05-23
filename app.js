@@ -5,6 +5,8 @@ const sequelize = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
 const bookRoutes = require('./routes/bookRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const bookprizeRoutes = require('./routes/bookprizeRoutes');
+const loanRoutes = require ('./routes/loanRoutes')
 const prizeRoutes = require('./routes/prizeRoutes');
 const swaggerUI = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
@@ -19,6 +21,8 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.use('/users', userRoutes);
 app.use('/books', bookRoutes);
+app.use('/loan', loanRoutes);
+app.use('/bookprize', bookprizeRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/prizes', prizeRoutes);
 
