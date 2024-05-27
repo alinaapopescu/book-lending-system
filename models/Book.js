@@ -9,7 +9,8 @@ const Book = sequelize.define('Book', {
     autoIncrement: true 
   },
   title: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    unique: true
   },
   author: {
     type: DataTypes.STRING
@@ -19,7 +20,8 @@ const Book = sequelize.define('Book', {
     unique: true
   },
   cover_image: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    unique: true
   },
   category_id: {
     type: DataTypes.INTEGER,

@@ -7,11 +7,16 @@ const { Op } = require('sequelize');
 exports.addBook = async (req, res) => {
   try {
     const { title, author, isbn, cover_image, category_id } = req.body;
-     const categoryExists = await Category.findByPk(category_id);
-     if (!categoryExists) {
-       return res.status(404).send({ message: 'Category not found' });
-     }
-    const book = await Book.create({ title, author, isbn, cover_image, category_id });
+    const categoryExists = await Category.findByPk(category_id);
+    //  if (!categoryExists) {
+    //    return res.status(404).send({ message: 'Category not found' });
+    //  }
+    let book;
+    if (categoryExists)
+      {book = await Book.create({ title, author, isbn, cover_image, category_id });}
+    else {
+       book = await Book.create({ title, author, isbn, cover_image });
+    }
     res.status(201).send({ message: 'Book added successfully', book });
   } catch (error) {
     console.error('Error adding book:', error);
@@ -25,10 +30,6 @@ exports.deleteBook = async (req, res) => {
     const book = await Book.findByPk(id);
     if (!book) {
       return res.status(404).send({ message: 'Book not found' });
-    }
-    const loan = await Loan.findOne({ where: { book_id: id } });
-    if (loan) {
-      return res.status(400).send({ message: 'Book cannot be deleted because it is currently loaned out.' });
     }
     const bookPrizes = await BookPrize.findAll({ where: { book_id: id } });
     for (const bookPrize of bookPrizes) {
@@ -108,6 +109,25 @@ exports.searchBooksByAuthor = async (req, res) => {
   } catch (error) {
     console.error('Error searching books by author:', error);
     res.status(500).send({ message: 'Error searching books by author', error });
+  }
+};
+
+// Sorted + pagination
+exports.getSortedBooksPaginated = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
+
+    const books = await Book.findAll({
+      order: [['title', 'ASC']], 
+      limit: limit,              
+      offset: offset            
+    });
+    res.status(200).send(books);
+  } catch (error) {
+    console.error('Error fetching sorted books:', error);
+    res.status(500).send({ message: 'Error fetching sorted books', error });
   }
 };
 

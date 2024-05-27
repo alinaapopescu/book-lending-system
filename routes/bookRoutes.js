@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bookController = require('../controller/bookController');
 const { authenticate, isAdmin } = require('../middleware/auth');
-
+const { validateBook } = require('../middleware/bookmiddleware');
 
 /**
  * @openapi
@@ -35,11 +35,11 @@ const { authenticate, isAdmin } = require('../middleware/auth');
  *       403:
  *         description: Authorization required
  */
-router.post('/add', authenticate, isAdmin, bookController.addBook);
+router.post('/add', validateBook, authenticate, isAdmin, bookController.addBook);
 
 /**
  * @openapi
- * /books/delete/{id}:
+ * /books/{id}:
  *   delete:
  *     security:
  *       - bearerAuth: []
@@ -63,11 +63,11 @@ router.post('/add', authenticate, isAdmin, bookController.addBook);
  *         description: Authorization required
  */
 
-router.delete('/delete/:id', authenticate, isAdmin, bookController.deleteBook);
+router.delete('/:id', authenticate, isAdmin, bookController.deleteBook);
 
 /**
  * @openapi
- * /books/update/{id}:
+ * /books/{id}:
  *   put:
  *     security:
  *       - bearerAuth: []
@@ -107,7 +107,7 @@ router.delete('/delete/:id', authenticate, isAdmin, bookController.deleteBook);
  *       403:
  *         description: Authorization required
  */
-router.put('/update/:id', authenticate, isAdmin, bookController.updateBook);
+router.put('/:id', authenticate, isAdmin, bookController.updateBook);
 
 
 
@@ -168,7 +168,7 @@ router.get('/sorted', bookController.getSortedBooks);
  *                   author:
  *                     type: string
  */
-router.get('/search/author/:author', bookController.searchBooksByAuthor);
+router.get('/author/:author', bookController.searchBooksByAuthor);
 
 /**
  * @openapi
@@ -203,7 +203,9 @@ router.get('/search/author/:author', bookController.searchBooksByAuthor);
  *                   author:
  *                     type: string
  */
-router.get('/search/title/:title', bookController.searchBooksByTitle);
+router.get('/title/:title', bookController.searchBooksByTitle);
 
+
+router.get('/sortedp', bookController.getSortedBooksPaginated);
 
 module.exports = router;
