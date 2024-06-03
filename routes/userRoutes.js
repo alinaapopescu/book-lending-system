@@ -86,7 +86,7 @@ router.post('/login', userController.login);
  *       403:
  *         description: Authorization required
  */
-router.post('/create', userController.createUser);
+router.post('/', userController.createUser);
 
 /**
  * @openapi
@@ -128,7 +128,7 @@ router.post('/create', userController.createUser);
  *       403:
  *         description: Authorization required
  */
-router.put('/update/:id', authenticate, isAdmin, userController.updateUser);
+router.put('/:id', authenticate, isAdmin, userController.updateUser);
 
 /**
  * @openapi
@@ -155,7 +155,7 @@ router.put('/update/:id', authenticate, isAdmin, userController.updateUser);
  *       403:
  *         description: Authorization required
  */
-router.delete('/delete/:id', authenticate, isAdmin, userController.deleteUser);
+router.delete('/:id', authenticate, isAdmin, userController.deleteUser);
 
 /**
  * @openapi

@@ -32,7 +32,7 @@ const { authenticate, isAdmin } = require('../middleware/auth');
  *       403:
  *         description: Authorization required
  */
-router.post('/add', authenticate, isAdmin, prizeController.addPrize);
+router.post('/', authenticate, isAdmin, prizeController.addPrize);
 
 
 /**
@@ -61,7 +61,7 @@ router.post('/add', authenticate, isAdmin, prizeController.addPrize);
  *         description: Authorization required
  */
 
-router.delete('/delete/:id', authenticate, isAdmin, prizeController.deletePrize);
+router.delete('/:id', authenticate, isAdmin, prizeController.deletePrize);
 
 /**
  * @openapi
@@ -101,6 +101,6 @@ router.delete('/delete/:id', authenticate, isAdmin, prizeController.deletePrize)
  *       403:
  *         description: Authorization required
  */
-router.put('/update/:id', authenticate, isAdmin, prizeController.updatePrize);
+router.put('/:id', authenticate, isAdmin, prizeController.updatePrize);
 
 module.exports = router;

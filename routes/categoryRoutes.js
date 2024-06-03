@@ -30,7 +30,7 @@ const { authenticate, isAdmin } = require('../middleware/auth');
  *       403:
  *         description: Authorization required
  */
-router.post('/add', authenticate, isAdmin, categoryController.addCategory);
+router.post('/', authenticate, isAdmin, categoryController.addCategory);
 
 /**
  * @openapi
@@ -58,7 +58,7 @@ router.post('/add', authenticate, isAdmin, categoryController.addCategory);
  *         description: Authorization required
  */
 
-router.delete('/delete/:id', authenticate, isAdmin, categoryController.deleteCategory);
+router.delete('/:id', authenticate, isAdmin, categoryController.deleteCategory);
 
 /**
  * @openapi
@@ -96,6 +96,6 @@ router.delete('/delete/:id', authenticate, isAdmin, categoryController.deleteCat
  *       403:
  *         description: Authorization required
  */
-router.put('/update/:id', authenticate, isAdmin, categoryController.updateCategory);
+router.put('/:id', authenticate, isAdmin, categoryController.updateCategory);
 
 module.exports = router;

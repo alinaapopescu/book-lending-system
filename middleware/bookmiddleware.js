@@ -37,7 +37,6 @@ exports.validateBook = [
     body('category_id').custom(async (category_id) => {
       // console.log(category_id );
       if (category_id === null || category_id==='' || category_id === undefined ) {
-        console.log("aici");
         return true;
     } else if (category_id) {
         try {

@@ -30,7 +30,7 @@ const { authenticate, isAdmin} = require('../middleware/auth');
  *       403:
  *         description: Authorization required
  */
-router.post('/add', authenticate, loanController.loanBook);
+router.post('/', authenticate, loanController.loanBook);
 
 
 
@@ -58,7 +58,7 @@ router.post('/add', authenticate, loanController.loanBook);
  *       403:
  *         description: Authorization required
  */
-router.get('/get/:userId', authenticate, isAdmin, loanController.getAllUserLoans);
+router.get('/:userId', authenticate, isAdmin, loanController.getAllUserLoans);
 
 
 /**

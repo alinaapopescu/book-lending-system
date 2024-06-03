@@ -35,7 +35,7 @@ const { validateBook } = require('../middleware/bookmiddleware');
  *       403:
  *         description: Authorization required
  */
-router.post('/add', validateBook, authenticate, isAdmin, bookController.addBook);
+router.post('/', validateBook, authenticate, isAdmin, bookController.addBook);
 
 /**
  * @openapi
