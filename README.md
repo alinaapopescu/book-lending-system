@@ -36,11 +36,11 @@ npm install
 ### Environment
 Create a .env file in the root directory of the project. This file should contain the following environment variables:
 ```
-DB_NAME=nodeapp
-DB_USER=root
-DB_PASS=ciscosecpa55
-DB_HOST=localhost
-JWT_SECRET=9d9e12ca3dc5c0dba13ed2f5121d91bb9d9063a36b3e2b7c58fdc742bb999599
+DB_NAME
+DB_USER
+DB_PASS
+DB_HOST
+JWT_SECRET
 ```
 
 These variables are used to configure the database connection and JWT authentication:
