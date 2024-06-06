@@ -130,9 +130,9 @@ const swaggerDefinition = {
   module.exports = swaggerSpec;
 ```
 
-![Endpoints](./images/sw1.png)
-![Endpoints](./images/sw2.png)
-![Endpoints](./images/sw3.png)
+![Endpoints](./images/sw2n.png)
+![Endpoints](./images/sw3n.png)
+![Endpoints](./images/sw4n.png)
 
 
 ## Testing
