@@ -6,7 +6,7 @@ const { validateBook } = require('../middleware/bookmiddleware');
 
 /**
  * @openapi
- * /books/add:
+ * /books:
  *   post:
  *     security:
  *       - bearerAuth: []
@@ -137,7 +137,7 @@ router.get('/sorted', bookController.getSortedBooks);
 
 /**
  * @openapi
- * /books/search/author/{author}:
+ * /books/author/{author}:
  *   get:
  *     security:
  *       - bearerAuth: []
@@ -172,7 +172,7 @@ router.get('/author/:author', bookController.searchBooksByAuthor);
 
 /**
  * @openapi
- * /books/search/title/{title}:
+ * /books/title/{title}:
  *   get:
  *     security:
  *       - bearerAuth: []

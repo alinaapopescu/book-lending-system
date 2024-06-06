@@ -6,7 +6,7 @@ const { authenticate, isAdmin } = require('../middleware/auth');
 
 /**
  * @openapi
- * /categories/add:
+ * /categories:
  *   post:
  *     security:
  *       - bearerAuth: []
@@ -34,7 +34,7 @@ router.post('/', authenticate, isAdmin, categoryController.addCategory);
 
 /**
  * @openapi
- * /categories/delete/{id}:
+ * /categories/{id}:
  *   delete:
  *     security:
  *       - bearerAuth: []
@@ -62,7 +62,7 @@ router.delete('/:id', authenticate, isAdmin, categoryController.deleteCategory);
 
 /**
  * @openapi
- * /categories/update/{id}:
+ * /categories/{id}:
  *   put:
  *     security:
  *       - bearerAuth: []

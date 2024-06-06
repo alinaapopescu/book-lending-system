@@ -6,7 +6,7 @@ const { authenticate, isAdmin } = require('../middleware/auth');
 
 /**
  * @openapi
- * /prizes/add:
+ * /prizes/:
  *   post:
  *     security:
  *       - bearerAuth: []
@@ -37,7 +37,7 @@ router.post('/', authenticate, isAdmin, prizeController.addPrize);
 
 /**
  * @openapi
- * /prizes/delete/{id}:
+ * /prizes/{id}:
  *   delete:
  *     security:
  *       - bearerAuth: []
@@ -65,7 +65,7 @@ router.delete('/:id', authenticate, isAdmin, prizeController.deletePrize);
 
 /**
  * @openapi
- * /prizes/update/{id}:
+ * /prizes/{id}:
  *   put:
  *     security:
  *       - bearerAuth: []

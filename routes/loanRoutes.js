@@ -6,7 +6,7 @@ const { authenticate, isAdmin} = require('../middleware/auth');
 
 /**
  * @openapi
- * /loan/add:
+ * /loan/:
  *   post:
  *     security:
  *       - bearerAuth: []
@@ -36,7 +36,7 @@ router.post('/', authenticate, loanController.loanBook);
 
 /**
  * @openapi
- * /loan/get/:userId:
+ * /loan/:userId:
  *   post:
  *     security:
  *       - bearerAuth: []

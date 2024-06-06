@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /users/register:
+ * /users/:
  *   post:
  *     tags:
  *       - Users
@@ -57,7 +57,7 @@ router.post('/login', userController.login);
 
 /**
  * @openapi
- * /users/create:
+ * /users/:
  *   post:
  *     security:
  *       - bearerAuth: []
@@ -90,7 +90,7 @@ router.post('/', userController.createUser);
 
 /**
  * @openapi
- * /users/update/{id}:
+ * /users/{id}:
  *   put:
  *     security:
  *       - bearerAuth: []
@@ -132,7 +132,7 @@ router.put('/:id', authenticate, isAdmin, userController.updateUser);
 
 /**
  * @openapi
- * /users/delete/{id}:
+ * /users/{id}:
  *   delete:
  *     security:
  *       - bearerAuth: []

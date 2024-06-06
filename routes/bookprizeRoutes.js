@@ -6,7 +6,7 @@ const { authenticate, isAdmin } = require('../middleware/auth');
 
 /**
  * @openapi
- * /bookprize/add:
+ * /bookprize:
  *   post:
  *     security:
  *       - bearerAuth: []
@@ -30,12 +30,12 @@ const { authenticate, isAdmin } = require('../middleware/auth');
  *       403:
  *         description: Authorization required
  */
-router.post('/add', authenticate, isAdmin, bookprizeController.addPrize);
+router.post('/', authenticate, isAdmin, bookprizeController.addPrize);
 
 
 /**
  * @openapi
- * /bookprize/delete/{id}:
+ * /bookprize/{id}:
  *   delete:
  *     security:
  *       - bearerAuth: []
@@ -59,11 +59,11 @@ router.post('/add', authenticate, isAdmin, bookprizeController.addPrize);
  *         description: Authorization required
  */
 
-router.delete('/delete/:id', authenticate, isAdmin, bookprizeController.deleteBookPrize);
+router.delete('/:id', authenticate, isAdmin, bookprizeController.deleteBookPrize);
 
 /**
  * @openapi
- * /bookprize/update/{id}:
+ * /bookprize/{id}:
  *   put:
  *     security:
  *       - bearerAuth: []
@@ -97,6 +97,6 @@ router.delete('/delete/:id', authenticate, isAdmin, bookprizeController.deleteBo
  *       403:
  *         description: Authorization required
  */
-router.put('/update/:id', authenticate, isAdmin, bookprizeController.updateBookPrize);
+router.put('/:id', authenticate, isAdmin, bookprizeController.updateBookPrize);
 
 module.exports = router;
