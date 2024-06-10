@@ -61,7 +61,7 @@ JWT_SECRET: A secret key for signing JSON Web Tokens (JWT).
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
-// Create a new instance of Sequelize with database credentials from .env file
+
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -71,7 +71,7 @@ const sequelize = new Sequelize(
     logging: console.log
 });
 
-// Test the database connection
+
 sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
